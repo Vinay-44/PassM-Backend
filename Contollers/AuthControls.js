@@ -51,9 +51,7 @@ const login = async (req, res) => {
 		if (!checkPass) {
 			return res.status(400).json({ status: false, msg: 'Wrong Credentials!' })
 		}
-		const signJwt = jwt.sign({ userID: checkDoesntExist.id }, process.env.JWT_SECRET, {
-			expiresIn: '1h'
-		})
+		const signJwt = jwt.sign({ userID: checkDoesntExist.id }, process.env.JWT_SECRET)
 		res.cookie('token', signJwt, {
 			httpOnly: true,
 			sameSite: process.env.NODE_ENV == "Production" ? 'none' : 'lax',
