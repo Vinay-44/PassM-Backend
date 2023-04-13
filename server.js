@@ -16,7 +16,6 @@ app.use('/pass/', passRouter)
 
 app.listen(process.env.PORT, async () => {
 	try {
-		console.log(process.env.URI)
 		await mongoose.connect(process.env.URI);
 		console.log(`Server Running on PORT ${process.env.PORT}`)
 	} catch (error) {
