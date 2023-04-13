@@ -10,7 +10,6 @@ const register = async (req, res) => {
 			return res.status(400).json({ status: false, msg: "Please Enter All Fields.." })
 		}
 		const checkExist = await authModel.find({ email }, { username })
-		console.log(checkExist)
 		if (checkExist.length) {
 			return res.status(400).json({ status: false, msg: "User already Exist with this Credentials" })
 		}
