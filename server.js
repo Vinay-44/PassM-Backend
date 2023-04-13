@@ -14,6 +14,12 @@ app.use(cookieParse())
 app.use('/auth/', authRouter)
 app.use('/pass/', passRouter)
 
+app.get('/', (req, res) => {
+	res.status(200).json({
+		msg: "Working"
+	})
+})
+
 app.listen(process.env.PORT, async () => {
 	try {
 		await mongoose.connect(process.env.URI);
