@@ -61,7 +61,8 @@ const login = async (req, res) => {
 			status: true, msg: "Logged In..", jwt: signJwt, user: {
 				username: checkDoesntExist.username,
 				avatar: checkDoesntExist.avatar,
-				userID: checkDoesntExist._id
+				userID: checkDoesntExist._id,
+				email: checkDoesntExist.email
 			}
 		})
 	} catch (error) {
