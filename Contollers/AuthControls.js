@@ -73,9 +73,9 @@ const login = async (req, res) => {
 const deleteAccount = async (req, res) => {
 	try {
 
-		const id = req.user;
+		const { userid } = req.params;
 
-		await authModel.findByIdAndDelete({ _id: id })
+		await authModel.findByIdAndDelete({ _id: userid })
 
 		res.status(200).json({ status: true, msg: " Account Deleted!" })
 	} catch (error) {
@@ -87,10 +87,27 @@ const deleteAccount = async (req, res) => {
 const updateAccount = async (req, res) => {
 	try {
 
-		const id = req.user;
+		const { userid } = req.params;
+		console.log(userid)
+		let { email, username, pin, oldpin } = req.body;
+		const getUser = await authModel.findById(userid);
 
-		await authModel.findByIdAndUpdate(id, { $set: req.body })
+		const compare = await bcrypt.compare(oldpin, getUser.pin)
+		if (!compare) {
+			return res.status(400).json({ msg: 'Wrong Old PIN.' })
+		}
+		if (oldpin === pin) {
+			pin = getUser.pin
+		}
+		else {
+			const hashedNewPin = await bcrypt.hash(pin, 12)
+			pin = hashedNewPin
+		}
 
+		const s = await authModel.findByIdAndUpdate(userid, {
+			$set: { email, username, pin }
+		})
+		console.log(s)
 		res.status(200).json({ status: 202, msg: "Updated" })
 	} catch (error) {
 		res.status(400).json({ status: "error", error })

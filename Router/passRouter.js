@@ -6,8 +6,8 @@ const { addPassword, getPassword, deletePassword, updatePasswordDetails, updateP
 router.get('/', jwtCheck, getPassword)
 router.post('/addPass', jwtCheck, addPassword)
 router.delete('/delete/:id', jwtCheck, deletePassword)
-router.patch('/updateDetails/:id', jwtCheck, updatePasswordDetails)
-router.patch('/updatePassword/:id', jwtCheck, updatePassword)
+router.patch('/updateDetails/:userid', jwtCheck, updatePasswordDetails)
+router.patch('/updatePassword/:userid', jwtCheck, updatePassword)
 router.post('/dcrypt/:id', jwtCheck, dcryptPassword)
 
 module.exports = router
